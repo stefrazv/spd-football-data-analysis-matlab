@@ -78,37 +78,29 @@ The test rejected H₀ (*p* < 0.05).
 
 An important distinction should be made between statistical and practical significance. Although the 0.8 cm difference between the observed mean height (180.8 cm) and the hypothesized value (180 cm) is statistically significant due to the very large sample size (*n* = 120,000), the difference is practically negligible on the football pitch.
 
-## Machine learning: k-nearest neighbors (kNN)
+## 🤖 Machine Learning: Model Selection (kNN vs. Naive Bayes)
 
-A k-nearest neighbors (kNN) algorithm with **k = 5** was implemented to classify players into three broad positional categories: **forward, midfielder, and defender**.
-
-The model used only numerical metrics:
-
-* goals
-* assists
-* cards
-* minutes played
-* height
+We implemented a machine learning algorithm to classify players into three broad positional categories: **forward, midfielder, and defender**. The model used only numerical metrics: goals, assists, cards, minutes played, and height.
 
 ### Model configuration
-
 * **Data split:** 70% training / 30% testing
 * **Standardization:** The data was standardized (`Standardize = true`) to prevent the `minutes_played` variable, which can reach approximately 3,400, from dominating the Euclidean distance relative to smaller-scale variables such as goals, which range from 0 to 50.
-* **Accuracy:** The model achieved an accuracy of **53.77%**.
 
-### Interpretation
+### Why kNN over Naive Bayes?
+During the experimentation phase, we tested multiple classification algorithms, including a **Naive Bayes** model (included in the repository as `cod_cu_mc_bayes.m`). 
 
-Although an accuracy of 53.77% may appear moderate, it substantially outperforms the approximately **33% random baseline** for a three-class classification problem.
+We ultimately selected **k-Nearest Neighbors (kNN, k=5)** for the final script (`proiect_final_spd.m`) because it yielded a higher accuracy (**53.77%**). Naive Bayes underperformed, likely due to its core assumption of feature independence (in football, goals and assists are often correlated for forwards, which breaks the Naive Bayes assumption).
 
-The confusion matrix shows that the algorithm performs particularly well at identifying forwards, with an accuracy of **67.1%**, while midfielders are more frequently misclassified, with an accuracy of **35.2%**.
+### Model Performance & Interpretation
+* **Model Performance:** The 53.77% accuracy significantly outperforms the 33% random baseline for 3 classes.
+* **Where the model struggles:** The confusion matrix shows excellent accuracy for Forwards (67.1%), but it drops significantly for Midfielders (35.2%). **The reason:** In the raw data, an attacking midfielder has the stats of a forward, while a defensive midfielder has the stats of a defender. The classes naturally overlap in real life, making it hard for the algorithm to separate them cleanly.
 
-This can be explained by the natural overlap between positional roles. For example, an attacking midfielder may have statistical characteristics similar to those of a forward, while a defensive midfielder may resemble a defender. Therefore, the overlap between classes reflects the complexity of real-world football rather than being solely a consequence of limitations in the algorithm.
+## 🚀 How to run the code
 
-## How to run
-
-1. Clone this repository.
-2. Download the dataset from Kaggle and rename/process it according to the script, or use the `set_date_fotbal_final.csv` file if it is included.
-3. Open MATLAB and run the `main.m` script (or the specified script name).
+1. Clone this repository to your local machine.
+2. All necessary data is already included in the repository! You don't need to download anything else. You will find both the raw datasets (`player_performances.csv`, `player_profiles.csv`) and our cleaned, final dataset (`set_date_fotbal_final.csv`). 
+   *(Note: The original dataset source can be found here: [Kaggle - 5.7M+ Records Football Dataset](https://www.kaggle.com/datasets/xfkzujqjvx97n/football-datasets))*
+3. Open MATLAB and run the final script named `proiect_final_spd.m`.
 
 ## Project developed by
 
