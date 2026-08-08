@@ -78,29 +78,36 @@ The test rejected H₀ (*p* < 0.05).
 
 An important distinction should be made between statistical and practical significance. Although the 0.8 cm difference between the observed mean height (180.8 cm) and the hypothesized value (180 cm) is statistically significant due to the very large sample size (*n* = 120,000), the difference is practically negligible on the football pitch.
 
-##  Machine Learning: Model Selection (kNN vs. Naive Bayes)
+## Machine Learning: Model Selection & Experiments
 
-We implemented a machine learning algorithm to classify players into three broad positional categories: **forward, midfielder, and defender**. The model used only numerical metrics: goals, assists, cards, minutes played, and height.
+We implemented supervised machine learning models to classify players into three broad positional categories: **forward, midfielder, and defender**.
 
-### Model configuration
-* **Data split:** 70% training / 30% testing
-* **Standardization:** The data was standardized (`Standardize = true`) to prevent the `minutes_played` variable, which can reach approximately 3,400, from dominating the Euclidean distance relative to smaller-scale variables such as goals, which range from 0 to 50.
+### Model Configurations Tested
+1. **k-Nearest Neighbors (kNN, k=5) — Final Selected Model (`cod_cu_knn.m`):**
+   * **Predictors (5):** Goals, assists, yellow cards, minutes played, height.
+   * **Preprocessing:** `Standardize = true` was applied to prevent large-scale variables (`minutes_played` up to ~3,400) from dominating Euclidean distances.
+   * **Accuracy:** **53.77%**.
+2. **Naive Bayes with Feature Discretization (`cod_cu_mc_bayes.m`):**
+   * **Predictors (5):** Features were discretized into domain-specific bins (e.g., scoring tiers, height ranges, starter vs. bench minutes).
+   * **Accuracy:** Lower than kNN due to the strong feature independence assumption inherent to Naive Bayes (goals and assists are naturally dependent).
+3. **2D Naive Bayes Decision Boundary (`cod_precizie_naspa.m`):**
+   * **Predictors (2):** Only goals and assists were used to plot decision boundaries visually.
+   * **Takeaway:** Using only two features limited classification power, confirming that multi-feature models are required.
 
-### Why kNN over Naive Bayes?
-During the experimentation phase, we tested multiple classification algorithms, including a **Naive Bayes** model (included in the repository as `cod_cu_mc_bayes.m`). 
+### Interpretation
+The selected kNN model's accuracy of **53.77%** substantially outperforms the **33.3% random baseline** for 3 classes. 
 
-We ultimately selected **k-Nearest Neighbors (kNN, k=5)** for the final script (`proiect_final_spd.m`) because it yielded a higher accuracy (**53.77%**). Naive Bayes underperformed, likely due to its core assumption of feature independence (in football, goals and assists are often correlated for forwards, which breaks the Naive Bayes assumption).
-
-### Model Performance & Interpretation
-* **Model Performance:** The 53.77% accuracy significantly outperforms the 33% random baseline for 3 classes.
-* **Where the model struggles:** The confusion matrix shows excellent accuracy for Forwards (67.1%), but it drops significantly for Midfielders (35.2%). **The reason:** In the raw data, an attacking midfielder has the stats of a forward, while a defensive midfielder has the stats of a defender. The classes naturally overlap in real life, making it hard for the algorithm to separate them cleanly.
+The confusion matrix reveals high accuracy for **Forwards (67.1%)**, while **Midfielders (35.2%)** are frequently misclassified. This is attributed to the real-world statistical overlap: attacking midfielders exhibit stat profiles similar to forwards, whereas defensive midfielders mirror defenders.
 
 ## How to run the code
 
 1. Clone this repository to your local machine.
-2. All necessary data is already included in the repository! You don't need to download anything else. You will find both the raw datasets (`player_performances.csv`, `player_profiles.csv`) and our cleaned, final dataset (`set_date_fotbal_final.csv`). 
-   *(Note: The original dataset source can be found here: [Kaggle - 5.7M+ Records Football Dataset](https://www.kaggle.com/datasets/xfkzujqjvx97n/football-datasets))*
-3. Open MATLAB and run the final script named `proiect_final_spd.m`.
+2. The preprocessed and sampled dataset (`set_date_fotbal_final.csv`) is included directly in this repository. No extra downloads are required to run the scripts.
+   *(Note: If you wish to inspect or re-process the raw 5.7M+ uncompressed files, you can access the original source here: [Kaggle - 5.7M+ Records Football Dataset](https://www.kaggle.com/datasets/xfkzujqjvx97n/football-datasets)).*
+3. Open MATLAB and run any of the project scripts:
+   * `cod_cu_knn.m` — Main script featuring the final kNN model (53.77% accuracy).
+   * `cod_cu_mc_bayes.m` — Alternative Naive Bayes implementation with feature binning.
+   * `cod_precizie_naspa.m` — Experimental 2D feature visualization and decision boundary plotting.
 
 ## Project developed by
 
