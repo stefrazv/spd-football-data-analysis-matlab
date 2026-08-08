@@ -78,7 +78,7 @@ The test rejected H₀ (*p* < 0.05).
 
 An important distinction should be made between statistical and practical significance. Although the 0.8 cm difference between the observed mean height (180.8 cm) and the hypothesized value (180 cm) is statistically significant due to the very large sample size (*n* = 120,000), the difference is practically negligible on the football pitch.
 
-## 🤖 Machine Learning: Model Selection (kNN vs. Naive Bayes)
+##  Machine Learning: Model Selection (kNN vs. Naive Bayes)
 
 We implemented a machine learning algorithm to classify players into three broad positional categories: **forward, midfielder, and defender**. The model used only numerical metrics: goals, assists, cards, minutes played, and height.
 
@@ -95,7 +95,7 @@ We ultimately selected **k-Nearest Neighbors (kNN, k=5)** for the final script (
 * **Model Performance:** The 53.77% accuracy significantly outperforms the 33% random baseline for 3 classes.
 * **Where the model struggles:** The confusion matrix shows excellent accuracy for Forwards (67.1%), but it drops significantly for Midfielders (35.2%). **The reason:** In the raw data, an attacking midfielder has the stats of a forward, while a defensive midfielder has the stats of a defender. The classes naturally overlap in real life, making it hard for the algorithm to separate them cleanly.
 
-## 🚀 How to run the code
+## How to run the code
 
 1. Clone this repository to your local machine.
 2. All necessary data is already included in the repository! You don't need to download anything else. You will find both the raw datasets (`player_performances.csv`, `player_profiles.csv`) and our cleaned, final dataset (`set_date_fotbal_final.csv`). 
