@@ -3,6 +3,8 @@ Statistical Analysis and Machine Learning on Football Data (SPD Project)
 
 # Football Player Analytics & Position Classification (MATLAB)
 
+[🔗 Click here to view the Visual Project Presentation (Canva)](https://canva.link/idei3y20utbc25e)
+
 ## Project overview
 
 This project presents a statistical analysis of professional football players' performance, covering the entire workflow from raw data preprocessing to the implementation of a machine learning model.
