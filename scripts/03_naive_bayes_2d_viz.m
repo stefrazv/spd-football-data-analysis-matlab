@@ -238,9 +238,9 @@ fprintf('Ipoteza nula (H0): Inaltimea medie a jucatorilor este de %d cm.\n', mu0
 fprintf('Statistica t: %.4f | P-value: %.4f\n', stats.tstat, p_val);
 
 if h == 1
-    disp('Decizie: Respingem H0! Inaltimea medie a jucatorilor difera semnificativ de 180 cm[cite: 3].');
+    disp('Decizie: Respingem H0! Inaltimea medie a jucatorilor difera semnificativ de 180 cm.');
 else
-    disp('Decizie: Nu respingem H0. Datele sugereaza ca inaltimea medie este in jur de 180 cm[cite: 3].');
+    disp('Decizie: Nu respingem H0. Datele sugereaza ca inaltimea medie este in jur de 180 cm.');
 end
 
 % =======================================================
