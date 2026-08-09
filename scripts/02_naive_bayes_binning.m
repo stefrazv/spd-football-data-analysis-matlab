@@ -146,7 +146,7 @@ disp('=======================================================');
 disp('   TEOREMA DE LIMITA CENTRALA (CERINTA 5)');
 disp('=======================================================');
 % Alegem o variabilă numerică puternic asimetrică (Golurile) pentru a 
-% demonstra vizual puterea teoremei[cite: 1, 2].
+% demonstra vizual puterea teoremei.
 populatie_goluri = dateCurate.goals;
 
 figure('Name', 'Cerinta 5: Teorema de Limita Centrala');
@@ -155,7 +155,7 @@ histogram(populatie_goluri, 'FaceColor', '#0072BD');
 title('Distributia Originala a Golurilor');
 xlabel('Goluri'); ylabel('Frecventa');
 
-% Extragem m eșantioane și calculăm media fiecăruia[cite: 2, 3]
+% Extragem m eșantioane și calculăm media fiecăruia
 nr_esantioane = 3000;
 n_esantion = 50; 
 medii_esantioane = zeros(1, nr_esantioane);
@@ -166,7 +166,7 @@ for i = 1:nr_esantioane
 end
 
 subplot(1, 2, 2);
-histfit(medii_esantioane); % Compara distributia cu cea normala[cite: 3, 4]
+histfit(medii_esantioane); % Compara distributia cu cea normala
 title('Distributia Mediilor (CLT)');
 xlabel('Media Golurilor'); ylabel('Frecventa');
 disp('S-a generat graficul pentru Teorema de Limita Centrala.');
@@ -178,7 +178,7 @@ disp(' ');
 disp('=======================================================');
 disp('   ESTIMARE PUNCTUALA (CERINTA 6)');
 disp('=======================================================');
-% Estimam media si abaterea pentru variabila "inaltime"[cite: 1]
+% Estimam media si abaterea pentru variabila "inaltime"
 populatie_inaltime = dateCurate.height;
 
 nr_esantioane_est = 50;
@@ -189,7 +189,7 @@ est_dispersii = zeros(1, nr_esantioane_est);
 for i = 1:nr_esantioane_est
     esantion_h = populatie_inaltime(randperm(length(populatie_inaltime), n_est));
     est_medii(i) = mean(esantion_h);
-    est_dispersii(i) = var(esantion_h); % estimatorul dispersiei[cite: 4]
+    est_dispersii(i) = var(esantion_h); % estimatorul dispersiei
 end
 
 medie_estimata = mean(est_medii);
@@ -210,7 +210,7 @@ alfa = 0.05;
 %z_alfa_2 = norminv(1 - alfa/2); % valoare din tabel Z
 t_alfa_2 = tinv(1 - alfa/2, n_est - 1); %am folosit t test ptc abaterea medie patratica a populatiei nu este cunoscuta. doar am estimat-o la cerinta 6
 
-% Eroarea se calculeaza folosind formula din curs[cite: 4]
+% Eroarea se calculeaza folosind formula din curs
 %eroare = z_alfa_2 * (abatere_estimata / sqrt(n_est));
 
 eroare = t_alfa_2 * (abatere_estimata / sqrt(n_est));
@@ -228,21 +228,21 @@ disp('=======================================================');
 disp('   TESTAREA IPOTEZELOR (CERINTA 8)');
 disp('=======================================================');
 % Suspectam ca media de inaltime a jucatorilor este 180 cm.
-% H0: mu = 180. H1: mu != 180 (Test bilateral)[cite: 2, 4]
+% H0: mu = 180. H1: mu != 180 (Test bilateral)
 mu0 = 180;
 alpha_test = 0.05;
 
 % Deoarece dispersia reala a populatiei este teoretic necunoscuta,
-% folosim testul t (ttest)[cite: 2, 3]
+% folosim testul t (ttest)
 [h, p_val, ci_test, stats] = ttest(populatie_inaltime, mu0, 'Alpha', alpha_test, 'Tail', 'both');
 
 fprintf('Ipoteza nula (H0): Inaltimea medie a jucatorilor este de %d cm.\n', mu0);
 fprintf('Statistica t: %.4f | P-value: %.4f\n', stats.tstat, p_val);
 
 if h == 1
-    disp('Decizie: Respingem H0! Inaltimea medie a jucatorilor difera semnificativ de 180 cm[cite: 3].');
+    disp('Decizie: Respingem H0! Inaltimea medie a jucatorilor difera semnificativ de 180 cm.');
 else
-    disp('Decizie: Nu respingem H0. Datele sugereaza ca inaltimea medie este in jur de 180 cm[cite: 3].');
+    disp('Decizie: Nu respingem H0. Datele sugereaza ca inaltimea medie este in jur de 180 cm.');
 end
 
 % =======================================================
@@ -252,18 +252,18 @@ disp(' ');
 disp('=======================================================');
 disp('   ANALIZA CORELATIILOR (CERINTA 9)');
 disp('=======================================================');
-% Construim o matrice cu variabilele de interes fizice si de performanta[cite: 3, 4]
+% Construim o matrice cu variabilele de interes fizice si de performanta
 Matrice_Date = [dateCurate.goals, dateCurate.assists, dateCurate.minutes_played, dateCurate.height];
 Nume_Variabile = {'Goluri', 'Pase_Decisive', 'Minute_Jucate', 'Inaltime'};
 
-% Calculam Matricea de Corelatie Pearson[cite: 4]
+% Calculam Matricea de Corelatie Pearson
 Matrice_Corelatie = corr(Matrice_Date, 'Type', 'Pearson');
 
 figure('Name', 'Cerinta 9: Matricea de Corelatie');
 h_heat = heatmap(Nume_Variabile, Nume_Variabile, Matrice_Corelatie);
 h_heat.Title = 'Matricea Coeficientilor de Corelatie Pearson';
-h_heat.Colormap = parula; % setam paleta de culori[cite: 3]
-h_heat.ColorLimits = [-1 1]; % limite de la -1 la 1[cite: 3]
+h_heat.Colormap = parula; % setam paleta de culori
+h_heat.ColorLimits = [-1 1]; % limite de la -1 la 1
 
 disp('S-a generat Harta Termica (Heatmap) a corelatiilor.');
 disp('Variabilele cu coeficientul cel mai apropiat de 1 sau -1 au cea mai mare influenta.');
